@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Job Agent | Premium Dashboard</title>
+    <link rel="stylesheet" href="/static/css/index.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+    <nav class="sidebar">
+        <div class="logo">
+            <i data-lucide="zap"></i>
+            <span>Job Agent</span>
+        </div>
+        <ul class="nav-links">
+            <li class="nav-item active" onclick="showSection('dashboard', this)">
+                <i data-lucide="layout-dashboard"></i> Dashboard
+            </li>
+            <li class="nav-item" onclick="showSection('profile', this)">
+                <i data-lucide="user-circle"></i> Profile & CV
+            </li>
+            <li class="nav-item" onclick="showSection('preferences', this)">
+            <li class="nav-item" onclick="showSection('preferences', this)">
+                <i data-lucide="settings"></i> Preferences
+            </li>
+        </ul>
+        <div class="nav-item" style="margin-top: auto; color: #ef4444;">
+            <i data-lucide="log-out"></i> Logout
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <header>
+            <h1 id="section-title">Dashboard</h1>
+            <div class="status-badge" id="status-badge">
+                <i data-lucide="check-circle" style="color: var(--success)"></i> System Ready
+            </div>
+        </header>
+
+        <section id="dashboard" class="content-section">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Total Scanned</h3>
+                    <p id="stat-total">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>New Matches</h3>
+                    <p id="stat-matches" style="color: var(--success)">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Last Scan</h3>
+                    <p id="stat-last" style="font-size: 1.2rem; margin-top: 0.5rem;">Never</p>
+                </div>
+            </div>
+
+            <div class="progress-container" id="scan-progress-container" style="display: none;">
+                <div class="progress-bar" id="scan-progress-bar"></div>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <h2 style="font-weight: 800;">Recent Opportunities</h2>
+                <button class="btn-primary" onclick="triggerScan()">
+                    <i data-lucide="refresh-cw"></i> Start Scan
+                </button>
+            </div>
+
+            <div class="job-grid" id="job-feed">
+                <!-- Jobs will be injected here -->
+                <div id="loading-spinner" style="text-align: center; grid-column: 1 / -1; padding: 5rem;">
+                    <i data-lucide="loader-2" class="spin"
+                        style="width: 48px; height: 48px; color: var(--accent-color);"></i>
+                    <p style="margin-top: 1rem; color: var(--text-secondary); font-weight: 600;">Fetching your career
+                        opportunities...</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="profile" class="content-section" style="display: none;">
+            <div class="form-section">
+                <h2 style="margin-bottom: 2rem; font-weight: 800;">CV Analysis</h2>
+                <p style="color: var(--text-secondary); margin-bottom: 2rem;">Paste your raw CV text here. Our AI uses
+                    this to calculate match scores and detect suitability.</p>
+                <div class="form-group">
+                    <label>Your Professional CV (Raw Text)</label>
+                    <textarea id="cv-input" placeholder="Paste your CV content here..."></textarea>
+                </div>
+                <button class="btn-primary" onclick="saveProfile()">
+                    Update AI Profile
+                </button>
+            </div>
+        </section>
+
+        <section id="preferences" class="content-section" style="display: none;">
+            <div class="form-section">
+                <h2 style="margin-bottom: 2rem; font-weight: 800;">Scanning Engine</h2>
+                <div class="form-group">
+                    <label>Email for Reports</label>
+                    <input type="email" id="pref-email" placeholder="example@gmail.com">
+                </div>
+                <div class="form-group">
+                    <label>LinkedIn Search URL</label>
+                    <input type="text" id="pref-url" placeholder="https://www.linkedin.com/jobs/search/...">
+                </div>
+                <div class="form-group">
+                    <label>Keywords (Comma separated)</label>
+                    <input type="text" id="pref-keywords" placeholder="Python, Backend, Docker">
+                </div>
+                <div class="form-group">
+                    <label>Excluded Keywords</label>
+                    <input type="text" id="pref-exclude" placeholder="Senior, Team Lead, Manager">
+                </div>
+                <div class="form-group">
+                    <label>Your Status (Level Detection)</label>
+                    <select id="pref-status">
+                        <option value="Student">Student / Intern (Öğrenci)</option>
+                        <option value="Graduate">New Graduate / Junior (Yeni Mezun)</option>
+                        <option value="Experienced">Experienced (Deneyimli)</option>
+                    </select>
+                </div>
+                <button class="btn-primary" onclick="saveSettings()">
+                    Save Scan Preferences
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <script src="/static/js/index.js"></script>
+    <script>
+        lucide.createIcons();
+        function showSection(id, el) {
+            document.querySelectorAll('.content-section').forEach(s => s.style.display = 'none');
+            document.getElementById(id).style.display = 'block';
+            document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+            el.classList.add('active');
+            document.getElementById('section-title').innerText = id.charAt(0).toUpperCase() + id.slice(1);
+        }
+    </script>
+</body>
+
+</html>

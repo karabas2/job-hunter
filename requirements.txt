@@ -1,0 +1,12 @@
+fastapi
+uvicorn[standard]
+sqlmodel
+playwright
+playwright-stealth
+apscheduler
+pydantic-settings
+emails
+jinja2
+python-multipart
+pymysql
+cryptography
